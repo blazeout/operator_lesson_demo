@@ -1,0 +1,15 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: ingress-manager-role
+
+# 控制 dashboard 中 命名空间模块 中的面板是否有权限查看
+rules:
+- apiGroups: [""] # 空字符串""表明使用core API group
+  resources: ["services"]
+  verbs: ["watch", "list"]
+
+- apiGroups: [ "networking.k8s.io/v1"]
+  resources: ["ingress"]
+  verbs: ["get", "list", "watch", "create", "update", "delete"]
