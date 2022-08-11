@@ -1,0 +1,42 @@
+# 写一个自定义CRD
+APIVersion: extensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  # 名字必需与下面的 spec 字段匹配 并且格式为 '<名称的负数>.<组名>'
+  name: demos.example.com
+spec:
+  group: example.com
+  names:
+    # 名称的复数形式
+    plural: demos
+    # 名称的单数形式
+    singular: demo
+    # kind
+    kind: Demo
+    shortNames:
+    - dm
+    categories:
+    - all
+    scope: Namespaced
+  versions:
+    - name: v1
+    # served = true 代表这个版本是否被启动
+    served: true
+    # storage = true 代表这个版本是否被存储
+    storage: true
+     schema:
+       openAPIV3Schema:
+         type: object
+         properties:
+          spec:
+            type: object
+            properties:
+              name:
+               type: string
+                # 正则格式 命名需要符合此格式
+                pattern: '^test$'
+    additionalPrinterColumns:
+    - name: CR-Name
+      type: string
+      description: "Name of the CR"
+      JSONPath: .spec.name
