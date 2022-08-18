@@ -1,4 +1,4 @@
-# sample-controller
+# App-controller
 
 This repository implements a simple controller for watching App resources as
 defined with a CustomResourceDefinition (CRD).
