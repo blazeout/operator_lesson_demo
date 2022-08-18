@@ -1,0 +1,13 @@
+apiVersion: appcontoller.wangjiahao.com/v1alpha1
+kind: App
+metadata:
+  name: app-demo
+spec:
+  service:
+    name: app-service-demo
+  deployment:
+    name: app-deployment-demo
+    image: nginx:latest
+    replicas: 2
+  ingress:
+    name: app-ingress-demo

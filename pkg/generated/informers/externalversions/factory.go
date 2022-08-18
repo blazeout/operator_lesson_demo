@@ -19,6 +19,9 @@ limitations under the License.
 package externalversions
 
 import (
+	versioned "app-controller/pkg/generated/clientset/versioned"
+	appcontroller "app-controller/pkg/generated/informers/externalversions/appcontroller"
+	internalinterfaces "app-controller/pkg/generated/informers/externalversions/internalinterfaces"
 	reflect "reflect"
 	sync "sync"
 	time "time"
@@ -27,9 +30,6 @@ import (
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
-	versioned "k8s.io/sample-controller/pkg/generated/clientset/versioned"
-	internalinterfaces "k8s.io/sample-controller/pkg/generated/informers/externalversions/internalinterfaces"
-	samplecontroller "k8s.io/sample-controller/pkg/generated/informers/externalversions/samplecontroller"
 )
 
 // SharedInformerOption defines the functional option type for SharedInformerFactory.
@@ -172,9 +172,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Samplecontroller() samplecontroller.Interface
+	Appcontroller() appcontroller.Interface
 }
 
-func (f *sharedInformerFactory) Samplecontroller() samplecontroller.Interface {
-	return samplecontroller.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Appcontroller() appcontroller.Interface {
+	return appcontroller.New(f, f.namespace, f.tweakListOptions)
 }

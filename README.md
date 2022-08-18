@@ -1,14 +1,14 @@
 # sample-controller
 
-This repository implements a simple controller for watching Foo resources as
+This repository implements a simple controller for watching App resources as
 defined with a CustomResourceDefinition (CRD).
 
-**Note:** go-get or vendor this package as `k8s.io/sample-controller`.
+**Note:** go-get or vendor this package as `app-controller`.
 
 This particular example demonstrates how to perform basic operations such as:
 
-* How to register a new custom resource (custom resource type) of type `Foo` using a CustomResourceDefinition.
-* How to create/get/list instances of your new resource type `Foo`.
+* How to register a new custom resource (custom resource type) of type `App` using a CustomResourceDefinition.
+* How to create/get/list instances of your new resource type `App`.
 * How to setup a controller on resource handling create/update/delete events.
 
 It makes use of the generators in [k8s.io/code-generator](https://github.com/kubernetes/code-generator)
@@ -18,7 +18,7 @@ do this yourself using the `./hack/update-codegen.sh` script.
 The `update-codegen` script will automatically generate the following files &
 directories:
 
-* `pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go`
+* `pkg/apis/appcontroller/v1alpha1/zz_generated.deepcopy.go`
 * `pkg/generated/`
 
 Changes should not be made to these files manually, and when creating your own
@@ -43,8 +43,8 @@ go about fetching this demo and its dependencies.
 When NOT using go 1.11 modules, you can use the following commands.
 
 ```sh
-go get -d k8s.io/sample-controller
-cd $GOPATH/src/k8s.io/sample-controller
+go get -d app-controller
+cd $GOPATH/src/app-controller
 godep restore
 ```
 
@@ -69,7 +69,7 @@ populate the `vendor` directory.
 If you are developing Kubernetes according to
 https://github.com/kubernetes/community/blob/master/contributors/guide/github-workflow.md
 then you already have a copy of this demo in
-`kubernetes/staging/src/k8s.io/sample-controller` and its dependencies
+`kubernetes/staging/src/app-controller` and its dependencies
 --- including the code generator --- are in usable locations
 (valid for all Go versions).
 
@@ -79,7 +79,7 @@ This is an example of how to build a kube-like controller with a single type.
 
 ## Running
 
-**Prerequisite**: Since the sample-controller uses `apps/v1` deployments, the Kubernetes cluster version should be greater than 1.9.
+**Prerequisite**: Since the sample-controller uses `apps/coreinformers` deployments, the Kubernetes cluster version should be greater than 1.9.
 
 ```sh
 # assumes you have a working kubeconfig, not required if operating in-cluster
@@ -89,8 +89,8 @@ go build -o sample-controller .
 # create a CustomResourceDefinition
 kubectl create -f artifacts/examples/crd-status-subresource.yaml
 
-# create a custom resource of type Foo
-kubectl create -f artifacts/examples/example-foo.yaml
+# create a custom resource of type App
+kubectl create -f artifacts/examples/example-App.yaml
 
 # check deployments created through the custom resource
 kubectl get deployments
@@ -128,7 +128,7 @@ type User struct {
 
 ## Validation
 
-To validate custom resources, use the [`CustomResourceValidation`](https://kubernetes.io/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/#validation) feature. Validation in the form of a [structured schema](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#specifying-a-structural-schema) is mandatory to be provided for `apiextensions.k8s.io/v1`.
+To validate custom resources, use the [`CustomResourceValidation`](https://kubernetes.io/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/#validation) feature. Validation in the form of a [structured schema](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#specifying-a-structural-schema) is mandatory to be provided for `apiextensions.k8s.io/coreinformers`.
 
 ### Example
 
@@ -137,7 +137,7 @@ The schema in [`crd.yaml`](./artifacts/examples/crd.yaml) applies the following 
 
 ## Subresources
 
-Custom Resources support `/status` and `/scale` [subresources](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#subresources). The `CustomResourceSubresources` feature is in GA from v1.16.
+Custom Resources support `/status` and `/scale` [subresources](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#subresources). The `CustomResourceSubresources` feature is in GA from coreinformers.16.
 
 ### Example
 
@@ -154,13 +154,13 @@ kubectl create -f artifacts/examples/crd-status-subresource.yaml
 ```
 
 ## A Note on the API version
-The [group](https://kubernetes.io/docs/reference/using-api/#api-groups) version of the custom resource in `crd.yaml` is `v1alpha`, this can be evolved to a stable API version, `v1`, using [CRD Versioning](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/).
+The [group](https://kubernetes.io/docs/reference/using-api/#api-groups) version of the custom resource in `crd.yaml` is `v1alpha`, this can be evolved to a stable API version, `coreinformers`, using [CRD Versioning](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/).
 
 ## Cleanup
 
 You can clean up the created CustomResourceDefinition with:
 ```sh
-kubectl delete crd foos.samplecontroller.k8s.io
+kubectl delete crd Apps.appcontroller.wangjiahao.com
 ```
 
 ## Compatibility
@@ -171,7 +171,7 @@ k8s.io/client-go.
 ## Where does it come from?
 
 `sample-controller` is synced from
-https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/sample-controller.
+https://github.com/kubernetes/kubernetes/blob/master/staging/src/app-controller.
 Code changes are made in that location, merged into k8s.io/kubernetes and
 later synced here.
 
