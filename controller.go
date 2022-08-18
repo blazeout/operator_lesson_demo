@@ -323,6 +323,18 @@ func (c *Controller) syncHandler(key string) error {
 		return fmt.Errorf("%s", msg)
 	}
 
+	if !metav1.IsControlledBy(service, App) {
+		msg := fmt.Sprintf(MessageResourceExists, service.Name)
+		c.recorder.Event(App, corev1.EventTypeWarning, ErrResourceExists, msg)
+		return fmt.Errorf("%s", msg)
+	}
+
+	if !metav1.IsControlledBy(ingress, App) {
+		msg := fmt.Sprintf(MessageResourceExists, ingress.Name)
+		c.recorder.Event(App, corev1.EventTypeWarning, ErrResourceExists, msg)
+		return fmt.Errorf("%s", msg)
+	}
+
 	// If an error occurs during Update, we'll requeue the item so we can
 	// attempt processing again later. This could have been caused by a
 	// temporary network failure, or any other transient reason.
