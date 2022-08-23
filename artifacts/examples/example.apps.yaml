@@ -1,4 +1,4 @@
-apiVersion: appcontoller.wangjiahao.com/v1alpha1
+apiVersion: appcontroller.wangjiahao.com/v1alpha1
 kind: App
 metadata:
   name: app-demo
