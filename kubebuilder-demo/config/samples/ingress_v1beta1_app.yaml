@@ -1,0 +1,9 @@
+apiVersion: ingress.baiding.tech/v1beta1
+kind: App
+metadata:
+  name: app-sample
+spec:
+  image: nginx:latest
+  replicas: 3
+  enable_ingress: false #会被修改为true
+  enable_service: true #成功
